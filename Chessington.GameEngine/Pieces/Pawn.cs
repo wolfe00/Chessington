@@ -28,7 +28,8 @@ namespace Chessington.GameEngine.Pieces
                     moves.Add(twoAhead);
                 }
             }
-            return moves;
+            
+            return moves.Where(board.InBounds);
         }
     }
 }

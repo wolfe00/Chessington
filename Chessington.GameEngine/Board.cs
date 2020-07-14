@@ -28,7 +28,7 @@ namespace Chessington.GameEngine
 
         public bool HasPiece(Square square)
         {
-            return board[square.Row, square.Col] != null;
+            return InBounds(square) && board[square.Row, square.Col] != null;
         }
 
         public bool HasAlly(Square square, Player player)
