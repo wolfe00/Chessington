@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Chessington.GameEngine.Pieces
@@ -10,6 +11,9 @@ namespace Chessington.GameEngine.Pieces
         {
             Player = player;
         }
+
+        public int Row { get; set; }
+        public int Col { get; set; }
 
         public Player Player { get; private set; }
 

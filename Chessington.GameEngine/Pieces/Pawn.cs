@@ -5,12 +5,18 @@ namespace Chessington.GameEngine.Pieces
 {
     public class Pawn : Piece
     {
-        public Pawn(Player player) 
-            : base(player) { }
+        private Player Player;
+
+        public Pawn(Player player)
+            : base(player)
+        {
+            Player = player;
+        }
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
-            return Enumerable.Empty<Square>();
+            var shift = (Player == Player.White) ? -1 : 1;
+            return new List<Square>() {Square.At(Row + shift, Col)};
         }
     }
 }

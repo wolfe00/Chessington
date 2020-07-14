@@ -24,6 +24,8 @@ namespace Chessington.GameEngine
         public void AddPiece(Square square, Piece pawn)
         {
             board[square.Row, square.Col] = pawn;
+            pawn.Row = square.Row;
+            pawn.Col = square.Col;
         }
     
         public Piece GetPiece(Square square)
