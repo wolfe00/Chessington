@@ -30,6 +30,16 @@ namespace Chessington.GameEngine
         {
             return board[square.Row, square.Col] != null;
         }
+
+        public bool HasAlly(Square square, Player player)
+        {
+            return HasPiece(square) && GetPiece(square).Player == player;
+        }
+
+        public bool HasEnemy(Square square, Player player)
+        {
+            return HasPiece(square) && GetPiece(square).Player != player;
+        }
     
         public Piece GetPiece(Square square)
         {

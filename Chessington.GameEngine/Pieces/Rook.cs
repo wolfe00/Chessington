@@ -21,7 +21,8 @@ namespace Chessington.GameEngine.Pieces
                 var dy = dir.Item2;
                 var x = currentSquare.Row + dx;
                 var y = currentSquare.Col + dy;
-                while (board.InBounds(Square.At(x,y)))
+                
+                while (CanGoOneStepFurther(x, y, dx, dy, board))
                 {
                     moves.Add(Square.At(x, y));
                     x += dx; 
