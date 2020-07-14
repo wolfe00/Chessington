@@ -20,10 +20,13 @@ namespace Chessington.GameEngine.Pieces
             var ahead = Square.At(currentSquare.Row + shift, currentSquare.Col);
             var twoAhead = Square.At(currentSquare.Row + 2 * shift, currentSquare.Col);
             var moves = new List<Square>();
-            moves.Add(ahead);
-            if (!HasMoved)
+            if (!board.HasPiece(ahead))
             {
-                moves.Add(twoAhead);
+                moves.Add(ahead);
+                if (!HasMoved && !board.HasPiece(twoAhead))
+                {
+                    moves.Add(twoAhead);
+                }
             }
             return moves;
         }
