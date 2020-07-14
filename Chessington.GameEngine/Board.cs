@@ -24,8 +24,6 @@ namespace Chessington.GameEngine
         public void AddPiece(Square square, Piece pawn)
         {
             board[square.Row, square.Col] = pawn;
-            pawn.Row = square.Row;
-            pawn.Col = square.Col;
         }
     
         public Piece GetPiece(Square square)
@@ -62,7 +60,7 @@ namespace Chessington.GameEngine
             //Move the piece and set the 'from' square to be empty.
             board[to.Row, to.Col] = board[from.Row, from.Col];
             board[from.Row, from.Col] = null;
-
+            
             CurrentPlayer = movingPiece.Player == Player.White ? Player.Black : Player.White;
             OnCurrentPlayerChanged(CurrentPlayer);
         }
