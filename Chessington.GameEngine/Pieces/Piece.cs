@@ -11,6 +11,7 @@ namespace Chessington.GameEngine.Pieces
         {
             Player = player;
         }
+        
         public bool HasMoved { get; set; } = false;
         public Player Player { get; private set; }
 
@@ -23,13 +24,53 @@ namespace Chessington.GameEngine.Pieces
             HasMoved = true;
         }
 
-        // For a given piece which can travel multiple squares in the same direction in one move, this function checks whether
-        // the piece can reach square (x,y) in a single move given that it can reach square (x - dx, y - dy)
-        // from its current position in one move. It requires that the piece can normally move in the (dx, dy) direction
-        protected bool CanGoOneStepFurther(int x, int y, int dx, int dy, Board board)
+        // Checks whether a piece can reach square (row, col) in a single move given that it can reach square
+        // (row - drow, col - dcol)from its current position in at most one move.
+        // It requires that the piece can move in the (dx, dy) direction if unimpeded
+        protected bool CanGoOneStepFurther(int row, int col, int drow, int dcol, Board board)
         {
-            return board.InBounds(Square.At(x, y)) && !board.HasEnemy(Square.At(x - dx, y - dy), this.Player) &&
-                !board.HasAlly(Square.At(x, y), this.Player);
+            return board.InBounds(Square.At(row, col)) && !board.HasEnemy(Square.At(row - drow, col - dcol), this.Player) &&
+                !board.HasAlly(Square.At(row, col), this.Player);
         }
+        protected List<Square> RangedMoves(Board board, List<Tuple<int, int>> drowdcol, Square currentSquare)
+        {
+            var moves = new List<Square>();
+
+            foreach (var direction in drowdcol)
+            {
+                var drow = direction.Item1;
+                var dcol = direction.Item2;
+                var row = currentSquare.Row + drow;
+                var col = currentSquare.Col + dcol;
+                while ((CanGoOneStepFurther(row, col, drow, dcol, board)))
+                {
+                    moves.Add(Square.At(row, col));
+                    row += drow;
+                    col += dcol;
+                }
+            }
+
+            return moves;
+        }
+        
+        protected List<Square> StepMoves(Board board, List<Tuple<int, int>> drowdcol, Square currentSquare)
+        {
+            var moves = new List<Square>();
+
+            foreach (var direction in drowdcol)
+            {
+                var drow = direction.Item1;
+                var dcol = direction.Item2;
+                var row = currentSquare.Row + drow;
+                var col = currentSquare.Col + dcol;
+                if ((CanGoOneStepFurther(row, col, drow, dcol, board)))
+                {
+                    moves.Add(Square.At(row, col));
+                }
+            }
+
+            return moves;
+        }
+        
     }
 }
